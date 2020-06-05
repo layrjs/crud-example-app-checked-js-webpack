@@ -1,4 +1,4 @@
-import {provide} from '@liaison/component';
+import {Component, provide} from '@liaison/component';
 import {Storable} from '@liaison/storable';
 import {ComponentHTTPClient} from '@liaison/component-http-client';
 
@@ -10,12 +10,12 @@ import {Common} from './common';
 export const getFrontend = async ({backendURL}) => {
   const client = new ComponentHTTPClient(backendURL, {mixins: [Storable]});
 
-  const Backend = await client.getComponent();
+  const BackendMovie = /** @type {typeof import("../../../backend/src/components/movie").Movie} */ (await client.getComponent());
 
-  class Frontend extends Backend {
+  class Frontend extends Component {
     @provide() static Root = Root;
     @provide() static MovieList = MovieList;
-    @provide() static Movie = Movie(Backend.Movie);
+    @provide() static Movie = Movie(BackendMovie);
     @provide() static Common = Common;
   }
 

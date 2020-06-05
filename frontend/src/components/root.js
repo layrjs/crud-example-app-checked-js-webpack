@@ -3,11 +3,11 @@ import React from 'react';
 import {view, useBrowserRouter} from '@liaison/react-integration';
 
 export class Root extends Component {
-  @consume() Frontend;
-  @consume() Common;
+  @consume() static Frontend;
+  /** @type {typeof import("./common").Common} */ @consume() static Common;
 
   @view() static Main() {
-    const [router, isReady] = useBrowserRouter(this.Root);
+    const [router, isReady] = useBrowserRouter(this.Frontend);
 
     if (!isReady) {
       return null;

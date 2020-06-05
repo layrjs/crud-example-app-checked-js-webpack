@@ -1,11 +1,11 @@
-import {Component, attribute} from '@liaison/component';
+import {Component, attribute, consume} from '@liaison/component';
 import {Routable, route} from '@liaison/routable';
 import React from 'react';
 import {view, useAsyncMemo} from '@liaison/react-integration';
 
 export class MovieList extends Routable(Component) {
-  @consume() Movie;
-  @consume() Common;
+  /** @type {ReturnType<typeof import("./movie").Movie>} */ @consume() static Movie;
+  /** @type {typeof import("./common").Common} */ @consume() static Common;
 
   @attribute('Movie[]?') items;
 
@@ -52,6 +52,8 @@ export class MovieList extends Routable(Component) {
   }
 
   @view() Main() {
+    const {Movie} = /** @type {typeof MovieList} */ (this.constructor);
+
     return (
       <>
         <ul>
@@ -62,7 +64,7 @@ export class MovieList extends Routable(Component) {
         <p>
           <button
             onClick={() => {
-              this.constructor.Movie.Creator.navigate();
+              Movie.Creator.navigate();
             }}
           >
             New

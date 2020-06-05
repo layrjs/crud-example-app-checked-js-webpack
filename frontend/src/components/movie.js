@@ -1,11 +1,14 @@
+import {consume} from '@liaison/component';
 import {Routable, route} from '@liaison/routable';
 import React, {useMemo} from 'react';
 import {view, useAsyncMemo, useAsyncCallback} from '@liaison/react-integration';
 
-export const Movie = (Base) =>
+export function Movie(
+  /** @type {typeof import("../../../backend/src/components/movie").Movie} */ Base
+) {
   class Movie extends Routable(Base) {
-    @consume() MovieList;
-    @consume() Common;
+    /** @type {typeof import("./movie-list").MovieList} */ @consume() static MovieList;
+    /** @type {typeof import("./common").Common} */ @consume() static Common;
 
     @view() static Layout({children}) {
       return (
@@ -49,10 +52,12 @@ export const Movie = (Base) =>
     }
 
     @view() Main() {
+      const {MovieList, Editor} = /** @type {typeof Movie} */ (this.constructor);
+
       const [handleDelete, isDeleting, deletingError] = useAsyncCallback(async () => {
         await this.delete();
 
-        this.constructor.MovieList.Main.navigate();
+        MovieList.Main.navigate();
       }, []);
 
       return (
@@ -77,7 +82,7 @@ export const Movie = (Base) =>
           <p>
             <button
               onClick={() => {
-                this.constructor.Editor.navigate(this);
+                Editor.navigate(this);
               }}
               disabled={isDeleting}
             >
@@ -105,10 +110,12 @@ export const Movie = (Base) =>
     }
 
     @view() Creator() {
+      const {MovieList} = /** @type {typeof Movie} */ (this.constructor);
+
       const [handleSave, , savingError] = useAsyncCallback(async () => {
         await this.save();
 
-        this.constructor.MovieList.Main.navigate();
+        MovieList.Main.navigate();
       }, []);
 
       return (
@@ -116,7 +123,7 @@ export const Movie = (Base) =>
           {savingError && <p>Sorry, something went wrong while saving the movie.</p>}
           <this.Form onSubmit={handleSave} />
           <p>
-            ‹ <this.constructor.MovieList.Main.Link>Back</this.constructor.MovieList.Main.Link>
+            ‹ <MovieList.Main.Link>Back</MovieList.Main.Link>
           </p>
         </div>
       );
@@ -131,6 +138,8 @@ export const Movie = (Base) =>
     }
 
     @view() Editor() {
+      const {Main} = /** @type {typeof Movie} */ (this.constructor);
+
       const forkedMovie = useMemo(() => this.fork(), []);
 
       const [handleSave, , savingError] = useAsyncCallback(async () => {
@@ -138,7 +147,7 @@ export const Movie = (Base) =>
 
         this.merge(forkedMovie);
 
-        this.constructor.Main.navigate(this);
+        Main.navigate(this);
       }, [forkedMovie]);
 
       return (
@@ -146,7 +155,7 @@ export const Movie = (Base) =>
           {savingError && <p>Sorry, something went wrong while saving the movie.</p>}
           <forkedMovie.Form onSubmit={handleSave} />
           <p>
-            ‹ <this.constructor.Main.Link params={this}>Back</this.constructor.Main.Link>
+            ‹ <Main.Link params={this}>Back</Main.Link>
           </p>
         </div>
       );
@@ -211,11 +220,16 @@ export const Movie = (Base) =>
     }
 
     @view() ListItem() {
+      const {Main} = /** @type {typeof Movie} */ (this.constructor);
+
       return (
         <li>
-          <this.constructor.Main.Link params={this}>{this.title}</this.constructor.Main.Link>
+          <Main.Link params={this}>{this.title}</Main.Link>
           {this.year !== undefined ? ` (${this.year})` : ''}
         </li>
       );
     }
-  };
+  }
+
+  return Movie;
+}

@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "target": "ES2018",
+    "module": "CommonJS",
+    "checkJs": true,
+    "jsx": "react",
     "experimentalDecorators": true
   }
 }

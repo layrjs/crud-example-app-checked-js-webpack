@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import {getFrontend} from './components/frontend';
 
-const backendURL = '%{BACKEND_URL}';
+const backendURL = 'http://localhost:16578'; // '%{BACKEND_URL}';
 
 (async () => {
   let content;
@@ -12,6 +12,7 @@ const backendURL = '%{BACKEND_URL}';
     const Frontend = await getFrontend({backendURL});
 
     if (process.env.NODE_ENV !== 'production') {
+      // @ts-ignore
       window.Frontend = Frontend; // For debugging
     }
 
