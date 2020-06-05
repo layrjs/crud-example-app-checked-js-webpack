@@ -5,6 +5,12 @@ const path = require('path');
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
 
+  const port = Number(process.env.FRONTEND_PORT);
+
+  if (isNaN(port)) {
+    throw new Error(`'FRONTEND_PORT' environment variable is missing`);
+  }
+
   return {
     entry: './src/index.js',
     output: {
@@ -39,7 +45,7 @@ module.exports = (env, argv) => {
       devtool: 'eval-cheap-module-source-map',
       devServer: {
         contentBase: './build/dev',
-        port: 16577,
+        port,
         historyApiFallback: true
       }
     })

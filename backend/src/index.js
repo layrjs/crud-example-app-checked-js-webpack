@@ -3,6 +3,12 @@ import {MongoDBStore} from '@liaison/mongodb-store';
 
 import {Movie} from './components/movie';
 
+const port = Number(process.env.BACKEND_PORT);
+
+if (isNaN(port)) {
+  throw new Error(`'BACKEND_PORT' environment variable is missing`);
+}
+
 const connectionString = process.env.MONGODB_STORE_CONNECTION_STRING;
 
 if (!connectionString) {
@@ -11,6 +17,6 @@ if (!connectionString) {
 
 new MongoDBStore(connectionString, Movie);
 
-const componentServer = new ComponentHTTPServer(Movie, {port: 16578});
+const componentServer = new ComponentHTTPServer(Movie, {port});
 
 componentServer.start();

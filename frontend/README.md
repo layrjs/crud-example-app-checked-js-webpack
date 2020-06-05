@@ -1,5 +1,21 @@
 # CRUD example app / frontend
 
-## Development environment
+## Usage
 
-URL: http://localhost:16577
+### Running the frontend in development mode
+
+Execute the following command:
+
+```sh
+FRONTEND_PORT=16577 npm run start
+```
+
+### Debugging
+
+Add the following entry in the local storage of your browser:
+
+```
+| Key   | Value     |
+| ----- | --------- |
+| debug | liaison:* |
+```
