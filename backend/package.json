@@ -1,0 +1,24 @@
+{
+  "name": "crud-example-app-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Manuel Vila <hi@mvila.me>",
+  "license": "MIT",
+  "scripts": {
+    "build": "babel src --out-dir dist",
+    "start": ""
+  },
+  "dependencies": {
+    "@liaison/component": "^0.5.0",
+    "@liaison/component-http-server": "^0.5.0",
+    "@liaison/mongodb-store": "^0.5.0",
+    "@liaison/storable": "^0.5.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "@babel/plugin-proposal-class-properties": "^7.10.1",
+    "@babel/plugin-proposal-decorators": "^7.10.1",
+    "@babel/preset-env": "^7.10.2"
+  }
+}
