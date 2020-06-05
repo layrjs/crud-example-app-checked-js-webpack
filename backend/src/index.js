@@ -15,8 +15,8 @@ if (!connectionString) {
   throw new Error(`'MONGODB_STORE_CONNECTION_STRING' environment variable is missing`);
 }
 
-new MongoDBStore(connectionString, Movie);
+const store = new MongoDBStore(connectionString);
+store.registerRootComponent(Movie);
 
 const componentServer = new ComponentHTTPServer(Movie, {port});
-
 componentServer.start();

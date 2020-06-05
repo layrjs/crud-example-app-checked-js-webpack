@@ -5,6 +5,7 @@
   "author": "Manuel Vila <hi@mvila.me>",
   "license": "MIT",
   "scripts": {
+    "postinstall": "(cd ./frontend && npm install) && (cd ./backend && npm install)",
     "start": "concurrently --names=frontend,backend,database --prefix-colors=green,blue,gray --kill-others \"(cd ./frontend && npm run start)\" \"(cd ./backend && npm run start)\" \"(cd ./database && ./start.sh)\""
   },
   "prettier": "@mvila/prettierrc",

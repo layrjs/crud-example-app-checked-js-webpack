@@ -3,7 +3,11 @@ import ReactDOM from 'react-dom';
 
 import {getFrontend} from './components/frontend';
 
-const backendURL = 'http://localhost:16578'; // '%{BACKEND_URL}';
+const backendURL = process.env.BACKEND_URL;
+
+if (!backendURL) {
+  throw new Error(`'BACKEND_URL' environment variable is missing`);
+}
 
 (async () => {
   let content;

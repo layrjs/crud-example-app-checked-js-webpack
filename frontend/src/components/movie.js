@@ -21,7 +21,7 @@ export function Movie(
 
     @view() static Loader({id, children}) {
       const [movie, isLoading, loadingError, retryLoading] = useAsyncMemo(async () => {
-        return await this.get({id}, {title: true, year: true, country: true});
+        return await this.get(id, {title: true, year: true, country: true});
       }, [id]);
 
       if (isLoading) {
@@ -80,12 +80,7 @@ export function Movie(
             </tbody>
           </table>
           <p>
-            <button
-              onClick={() => {
-                Editor.navigate(this);
-              }}
-              disabled={isDeleting}
-            >
+            <button onClick={() => Editor.navigate(this)} disabled={isDeleting}>
               Edit
             </button>
             &nbsp;

@@ -62,13 +62,7 @@ export class MovieList extends Routable(Component) {
           ))}
         </ul>
         <p>
-          <button
-            onClick={() => {
-              Movie.Creator.navigate();
-            }}
-          >
-            New
-          </button>
+          <button onClick={() => Movie.Creator.navigate()}>New</button>
         </p>
       </>
     );

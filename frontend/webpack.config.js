@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const path = require('path');
@@ -5,10 +6,14 @@ const path = require('path');
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
 
-  const port = Number(process.env.FRONTEND_PORT);
+  let port;
 
-  if (isNaN(port)) {
-    throw new Error(`'FRONTEND_PORT' environment variable is missing`);
+  if (!isProduction) {
+    port = Number(process.env.FRONTEND_PORT);
+
+    if (isNaN(port)) {
+      throw new Error(`'FRONTEND_PORT' environment variable is missing`);
+    }
   }
 
   return {
@@ -39,7 +44,8 @@ module.exports = (env, argv) => {
         template: './src/index.html',
         favicon: './src/assets/liaison-favicon-20191111.immutable.png',
         inject: false
-      })
+      }),
+      new webpack.EnvironmentPlugin(['BACKEND_URL'])
     ],
     ...(!isProduction && {
       devtool: 'eval-cheap-module-source-map',
