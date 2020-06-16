@@ -1,6 +1,6 @@
 # CRUD Example App
 
-A simple example showing how to build a full-stack CRUD app with Liaison.
+A simple example showing how to build a full-stack CRUD app with Liaison and a JavaScript codebase checked by TypeScript.
 
 ## Install
 
@@ -19,15 +19,13 @@ Make sure you have [Docker](https://www.docker.com/) installed as it is used to 
 Execute the following command:
 
 ```sh
-FRONTEND_PORT=16577 \
+FRONTEND_URL=http://localhost:16577 \
   BACKEND_URL=http://localhost:16578 \
-  BACKEND_PORT=16578 \
   MONGODB_STORE_CONNECTION_STRING=mongodb://test:test@localhost:16579/test \
-  MONGODB_PORT=16579 \
   npm run start
 ```
 
-The frontend should then be available at http://localhost:16577.
+The app should then be available at http://localhost:16577.
 
 ### Debugging
 
